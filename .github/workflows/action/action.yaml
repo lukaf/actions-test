@@ -3,4 +3,4 @@ runs:
   using: docker
   image: docker://alpine:latest
   args:
-    - "echo hello > /tmp/file"
+    - "sh -c 'echo hello > /tmp/file'"
