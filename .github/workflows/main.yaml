@@ -8,6 +8,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/action
+      - name: ls
+        run: ls -la $GITHUB_WORKSPACE/
       - uses: actions/upload-artifact@v3
         with:
           name: test-file
