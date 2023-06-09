@@ -8,3 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/action
+      - uses: actions/upload-artefact@v3
+        with:
+          name: test-file
+          path: ${{ env.RUNNER_TEMP }}/testing
