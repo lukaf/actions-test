@@ -1,6 +1,4 @@
 name: test
 runs:
   using: docker
-  image: docker://alpine:latest
-  args:
-    - "sh -c 'echo hello > /tmp/file'"
+  image: Dockerfile
