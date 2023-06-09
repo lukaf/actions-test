@@ -1,4 +1,5 @@
 #!/bin/sh -l
 
 env
-echo "Hello $1" > /tmp/file
+ls -la $GITHUB_OUTPUT
+mkdir -p $GITHUB_OUTPUT/testin
