@@ -1,0 +1,6 @@
+name: test
+runs:
+  using: docker
+  image: docker://alpine:latest
+  args:
+    - "echo hello > /tmp/file"

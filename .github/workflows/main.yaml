@@ -1,0 +1,13 @@
+name: testing
+on:
+  - push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: test
+    steps:
+      - uses: ./.github/workflows/actions
+      - uses: actions/upload-artifact@v3
+        with:
+          name: test-file
+          path: /tmp/file
