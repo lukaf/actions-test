@@ -1,4 +1,4 @@
 #!/bin/sh -l
 
 env
-echo test=hello > $RUNNER_TEMP/testing
+echo test=hello > $GITHUB_WORKSPACE/testing

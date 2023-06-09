@@ -11,4 +11,4 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: test-file
-          path: ${{ env.RUNNER_TEMP }}/testing
+          path: ${{ env.GITHUB_WORKSPACE }}/testing
