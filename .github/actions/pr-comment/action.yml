@@ -12,18 +12,17 @@ on:
         required: false
         default: ''
 
-jobs:
-  pr_comment:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '⚠️ Terraform formatting issues were found. Please run `terraform fmt -recursive` locally and commit the changes.'
-            })
+runs:
+  using: composite
+  steps:
+    - uses: actions/github-script@v7
+      with:
+        script: |
+          github.rest.issues.createComment({
+             issue_number: context.issue.number,
+             owner: context.repo.owner,
+             repo: context.repo.repo,
+             body: '⚠️ Terraform formatting issues were found. Please run `terraform fmt -recursive` locally and commit the changes.'
+          })
 
-            core.setFailed(inputs.error || inputs.comment)
+          core.setFailed(inputs.error || inputs.comment)
