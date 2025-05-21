@@ -24,6 +24,6 @@ jobs:
 
       - name: report failure
         if: github.event_name == 'pull_request' && steps.fail.outcome == 'failure'
-        uses: ./.github/workflows/pr-comment.yml
+        uses: ./.github/actions/pr-comment
         with:
           comment: '⚠️ Terraform formatting issues were found. Please run `terraform fmt -recursive` locally and commit the changes.'
