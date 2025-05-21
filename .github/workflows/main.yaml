@@ -1,16 +1,36 @@
 name: testing
 on:
-  - push
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
     name: test
     steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/workflows/action
-      - name: ls
-        run: ls -la $GITHUB_WORKSPACE/
-      - uses: actions/upload-artifact@v3
+      - uses: actions/checkout@v4
+      - name: fail
+        id: fail
+        uses: actions/github-script@v7
         with:
-          name: test-file
-          path: testing
+          script: core.setFailed('fail')
+
+      - name: report failure
+        uses: actions/github-script@v7
+        if: github.event_name == 'pull_request' && steps.fail.outcome == 'failure'
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '⚠️ Terraform formatting issues were found. Please run `terraform fmt -recursive` locally and commit the changes.'
+            })
+            core.setFailed('Terraform formatting issues')
