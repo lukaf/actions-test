@@ -23,15 +23,7 @@ jobs:
         continue-on-error: true
 
       - name: report failure
-        uses: actions/github-script@v7
         if: github.event_name == 'pull_request' && steps.fail.outcome == 'failure'
+        uses: ./.github/workflows/pr-comment.yml
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '⚠️ Terraform formatting issues were found. Please run `terraform fmt -recursive` locally and commit the changes.'
-            })
-            core.setFailed('Terraform formatting issues')
+          comment: '⚠️ Terraform formatting issues were found. Please run `terraform fmt -recursive` locally and commit the changes.'
