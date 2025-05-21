@@ -18,9 +18,9 @@ runs:
         COMMENT: ${{ inputs.comment }}
         ERROR: ${{ inputs.error || inputs.comment }}
       with:
-        const comment = process.env.COMMENT
-        const error = process.env.ERROR
         script: |
+          const comment = process.env.COMMENT
+          const error = process.env.ERROR
           github.rest.issues.createComment({
              issue_number: context.issue.number,
              owner: context.repo.owner,
