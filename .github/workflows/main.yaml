@@ -19,10 +19,8 @@ jobs:
           - dev
           - prod
 
-  dosomething:
-    name: something prod env
-    runs-on: ubuntu-latest
     environment: ${{ matrix.option }}
+
     steps:
       - name: Something
         run: echo "Hello, running in env ${{ matrix.option }}"
