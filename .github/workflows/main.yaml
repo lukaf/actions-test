@@ -26,3 +26,6 @@ jobs:
     steps:
       - name: Something
         run: echo "Hello, running in env ${{ matrix.option }}"
+
+      - name: Something else
+        run: echo change
