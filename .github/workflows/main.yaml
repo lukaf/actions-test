@@ -11,19 +11,18 @@ permissions:
 
 jobs:
   test:
+    name: create matrix
     runs-on: ubuntu-latest
-    name: test
-    steps:
-      - uses: actions/checkout@v4
-      - name: fail
-        id: fail
-        uses: actions/github-script@v7
-        with:
-          script: core.setFailed('fail')
-        continue-on-error: true
+    strategy:
+      matrix:
+        option:
+          - dev
+          - prod
 
-      - name: report failure
-        if: github.event_name == 'pull_request' && steps.fail.outcome == 'failure'
-        uses: ./.github/actions/pr-comment
-        with:
-          comment: '⚠️ Terraform formatting issues were found. Please run `terraform fmt -recursive` locally and commit the changes.'
+  dosomething:
+    name: something prod env
+    runs-on: ubuntu-latest
+    environment: ${{ matrix.option }}
+    steps:
+      - name: Something
+        run: echo "Hello, running in env ${{ matrix.option }}"
