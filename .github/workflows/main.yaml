@@ -12,28 +12,43 @@ permissions:
 
 
 jobs:
-  test:
-    name: test
+  fmt:
+    name: Format
     runs-on: ubuntu-latest
     steps:
-      - name: check
-        run: echo OK
+      - name: format
+        run: echo format
 
-  deploy:
-    name: deploy
+  auth-check:
+    name: Auth check
     runs-on: ubuntu-latest
-    needs: [test]
+    steps:
+      - name: Auth check
+        run: echo auth check
+
+  plan:
+    name: Plan
+    runs-on: ubuntu-latest
+    needs: [fmt, auth-check]
     strategy:
       matrix:
         option:
           - dev
           - prod
-
-    environment: ${{ matrix.option }}
-
     steps:
-      - name: Something
-        run: echo "Hello, running in env ${{ matrix.option }}"
+      - name: Plan
+        run: echo plan ${{ matrix.option }}
 
-      - name: Something else
-        run: echo change
+  apply:
+    name: Apply
+    runs-on: ubuntu-latest
+    needs: [plan]
+    strategy:
+      matrix:
+        option:
+          - dev
+          - prod
+    environment: ${{ matrix.option }}
+    steps:
+      - name: Apply
+        run: echo apply ${{ matrix.option }}
